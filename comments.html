@@ -3,29 +3,13 @@
 <head>
 <title>commentBook</title>
     <script src="https://code.jquery.com/jquery-3.5.1.js"
-			  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-			  crossorigin="anonymous">
+			integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+			crossorigin="anonymous">
 	</script>
 <script>
-	$(document).ready(function(){
-
-var newComment;
-
-$("#addComment").click(function(){
-     newComment = $("#newComment").val();
-     $("#comments").append('<div class="comment">'+newComment+'</div>');
-});
-var dataString = "com="+newComment;
-
-$.ajax({
-    url: "insertNew.php",
-    type: "POST",
-    data: dataString,
-    success: function(data){
-        console.log('success');
-    }           
-});
-$.ajax({
+ $(document).ready(function(){
+		
+  $.ajax({
     url: "retrieveComments.php",
     success: function(data){
         $.each(data, function(i, item) {
@@ -33,8 +17,27 @@ $.ajax({
           });
     },
     datatype: "json"
-});
-});
+  });
+
+var newComment;
+
+ $("#addComment").click(function(){
+     newComment = $("#newComment").val();
+     $("#comments").append('<div class="comment">'+newComment+'</div>');
+     
+    var dataString = "com="+newComment;
+    
+     $.ajax({
+     url: "insertNew.php",
+     type: "POST",
+     data: dataString,
+     success: function(data){
+        console.log('success');
+      }           
+    });
+  });
+
+ });
 
 	
 </script>
@@ -44,8 +47,8 @@ $.ajax({
   <p>Someone has just posted comment..</p><br>
   <p>"Adarsh is the best and he is very smart"</p>
   <textarea id="newComment" rows="6" cols="50"></textarea>
-  <button id="addComment"></button>
-  <div id="comments"></div>
+  <button id="addComment"> comment </button>
+    <div id="comments"></div>
   
 </body>
 </html>
